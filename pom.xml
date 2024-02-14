@@ -2,16 +2,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.eclipse.lspcommon</groupId>
+	<groupId>org.eclipse.lsp4jdt</groupId>
 	<artifactId>parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Eclipse LSP Common JDT Plugin Extension</name>
-	<description>Language Server Common JDT plugin extension for Eclipse</description>
+	<name>Eclipse LSP4JDT Plugin Extension</name>
+	<description>Language Server JDT plugin extension for Eclipse</description>
 
 	<organization>
-		<name>Eclipse LSPCommon</name>
+		<name>Eclipse LSP4JDT</name>
 	</organization>
 
 	<licenses>
@@ -30,7 +30,7 @@
 		<tycho.version>3.0.3</tycho.version>
 		<tycho.extras.version>${tycho.version}</tycho.extras.version>
 		<tycho.generateSourceReferences>true</tycho.generateSourceReferences>
-		<jdt.ls.version>1.28.0.20230928133859</jdt.ls.version>
+		<jdt.ls.version>1.32.0-SNAPSHOT</jdt.ls.version>
 		<releases.repo.id>repo.eclipse.org</releases.repo.id>
 	</properties>
 	<repositories>
@@ -177,7 +177,7 @@
 		</profile>
 	</profiles>
 	<modules>
-		<module>org.eclipse.common.jdt.core</module>
-		<module>org.eclipse.common.jdt.site</module>
+		<module>org.eclipse.lsp4jdt.core</module>
+		<module>org.eclipse.lsp4jdt.site</module>
 	</modules>
 </project>

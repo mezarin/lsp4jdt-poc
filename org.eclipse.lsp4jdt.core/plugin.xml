@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin id="org.eclipse.lsp4jdt.core"
+	name="Eclipse LSP4JDT Extension">
+	
+   <extension-point id="javaFeatureParticipants"
+                    name="%javaFeatureParticipants.name"
+                    schema="schema/javaFeatureParticipants.exsd" />
+   <extension-point id="javaASTValidators"
+                    name="%javaASTValidators.name"
+                    schema="schema/javaASTValidators.exsd"/>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime" />
+   </requires>
+</plugin>
