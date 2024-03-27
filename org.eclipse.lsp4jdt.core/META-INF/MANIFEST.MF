@@ -49,4 +49,5 @@ Export-Package:
  org.eclipse.lsp4jdt.participants.core.java.diagnostics,
  org.eclipse.lsp4jdt.participants.core.java.hover,
  org.eclipse.lsp4jdt.participants.core.java.symbols,
- org.eclipse.lsp4jdt.participants.core.ls
+ org.eclipse.lsp4jdt.participants.core.ls,
+ org.eclipse.lsp4jdt.core.java.validators

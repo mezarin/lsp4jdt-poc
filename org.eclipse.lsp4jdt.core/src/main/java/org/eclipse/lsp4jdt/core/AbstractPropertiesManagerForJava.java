@@ -97,6 +97,8 @@ public abstract class AbstractPropertiesManagerForJava {
     public abstract AbstractCodeActionHandler getCodeActionHandler();
 
     public abstract AbstractDiagnosticsHandler getDiagnosticsHandler();
+    
+    public abstract String getPluginId();
 
     public AbstractPropertiesManagerForJava() {
         this.codeActionHandler = getCodeActionHandler();

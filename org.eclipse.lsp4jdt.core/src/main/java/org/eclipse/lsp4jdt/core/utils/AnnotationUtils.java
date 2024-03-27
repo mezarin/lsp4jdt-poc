@@ -136,75 +136,61 @@ public class AnnotationUtils {
         return isMatchAnnotationFullyQualifiedName(annotation, annotationName);
     }
 
-    private static boolean isMatchAnnotationFullyQualifiedName(IAnnotation annotation, String annotationName) {
+	private static boolean isMatchAnnotationFullyQualifiedName(IAnnotation annotation, String annotationName) {
 
-        // The clean code should use resolveType:
+		// The clean code should use resolveType:
 
-        // IJavaElement parent = annotation.getParent();
-        // if (parent instanceof IMember) {
-        // IType declaringType = parent instanceof IType ? (IType) parent : ((IMember)
-        // parent).getDeclaringType();
-        // String elementName = annotation.getElementName();
-        // try {
-        // String[][] fullyQualifiedName = declaringType.resolveType(elementName);
-        // return annotationName.equals(fullyQualifiedName[0][0] + "." +
-        // fullyQualifiedName[0][1]);
-        // } catch (JavaModelException e) {
-        // }
-        // }
+		// IJavaElement parent = annotation.getParent();
+		// if (parent instanceof IMember) {
+		// IType declaringType = parent instanceof IType ? (IType) parent : ((IMember)
+		// parent).getDeclaringType();
+		// String elementName = annotation.getElementName();
+		// try {
+		// String[][] fullyQualifiedName = declaringType.resolveType(elementName);
+		// return annotationName.equals(fullyQualifiedName[0][0] + "." +
+		// fullyQualifiedName[0][1]);
+		// } catch (JavaModelException e) {
+		// }
+		// }
 
-        // But for performance reason, we check if the import of annotation name is
-        // declared
+		// But for performance reason, we check if the import of annotation name is
+		// declared
+		
 
-        ICompilationUnit unit = (ICompilationUnit) annotation.getAncestor(IJavaElement.COMPILATION_UNIT);
-        if (unit == null) {
-            return false;
-        }
-        IImportContainer container = unit.getImportContainer();
-        if (container == null) {
-            return false;
-        }
+		ICompilationUnit unit = (ICompilationUnit) annotation.getAncestor(IJavaElement.COMPILATION_UNIT);
+		if (unit == null) {
+			return false;
+		}
+		IImportContainer container = unit.getImportContainer();
+		if (container == null) {
+			return false;
+		}
 
-        // The following code uses JDT internal class and looks like
-        // ICompilationUnit#getImports()
-        // To avoid creating an array of IImportDeclaration, we do the following code:
+		// the jdt.ls method 'getInfo(..) was removed from the internal class JavaModelManager, and so can 
+		// no longer be relied upon.
+		// updating the code here to work correctly.
+		
+		IImportDeclaration[] importDeclArray = null;
+		try {
+			importDeclArray = unit.getImports();
+		} catch (JavaModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-        JavaModelManager manager = JavaModelManager.getJavaModelManager();
-        Object info = manager.getInfo(container);
-        if (info == null) {
-            if (manager.getInfo(unit) != null) {
-                // CU was opened, but no import container, then no imports
-                // return NO_IMPORTS;
-                return false;
-            } else {
-                try {
-                    unit.open(null);
-                } catch (JavaModelException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } // force opening of CU
-                info = manager.getInfo(container);
-                if (info == null)
-                    // after opening, if no import container, then no imports
-                    // return NO_IMPORTS;
-                    return false;
-            }
-        }
-        IJavaElement[] elements = ((ImportContainerInfo) info).getChildren();
-        for (IJavaElement child : elements) {
-            IImportDeclaration importDeclaration = (IImportDeclaration) child;
-            if (importDeclaration.isOnDemand()) {
-                String fqn = importDeclaration.getElementName();
-                String qualifier = fqn.substring(0, fqn.lastIndexOf('.'));
-                if (qualifier.equals(annotationName.substring(0, annotationName.lastIndexOf('.')))) {
-                    return true;
-                }
-            } else if (importDeclaration.getElementName().equals(annotationName)) {
-                return true;
-            }
-        }
-        return false;
-    }
+        for (IImportDeclaration importDeclaration : importDeclArray) {
+			if (importDeclaration.isOnDemand()) {
+				String fqn = importDeclaration.getElementName();
+				String qualifier = fqn.substring(0, fqn.lastIndexOf('.'));
+				if (qualifier.equals(annotationName.substring(0, annotationName.lastIndexOf('.')))) {
+					return true;
+				}
+			} else if (importDeclaration.getElementName().equals(annotationName)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
     /**
      * Returns true if the given annotation match the given annotation name and
