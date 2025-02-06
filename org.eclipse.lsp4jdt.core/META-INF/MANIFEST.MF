@@ -50,4 +50,6 @@ Export-Package:
  org.eclipse.lsp4jdt.participants.core.java.hover,
  org.eclipse.lsp4jdt.participants.core.java.symbols,
  org.eclipse.lsp4jdt.participants.core.ls,
+ org.eclipse.lsp4jdt.core.jaxrs,
+ org.eclipse.lsp4jdt.participants.core.java,
  org.eclipse.lsp4jdt.core.java.validators

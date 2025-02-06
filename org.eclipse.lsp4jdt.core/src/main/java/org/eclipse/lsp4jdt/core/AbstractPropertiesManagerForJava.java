@@ -651,7 +651,7 @@ public abstract class AbstractPropertiesManagerForJava {
      * @return the Java file information (ex : package name) from the given file URI
      *         and null otherwise.
      */
-    public JavaFileInfo fileInfo(JavaFileInfoParams params, IJDTUtils utils) {
+    public JavaFileInfo fileInfo(JavaFileInfoParams params, IJDTUtils utils, IProgressMonitor monitor) {
         String uri = params.getUri();
         final ICompilationUnit unit = utils.resolveCompilationUnit(uri);
         if (unit != null && unit.exists()) {

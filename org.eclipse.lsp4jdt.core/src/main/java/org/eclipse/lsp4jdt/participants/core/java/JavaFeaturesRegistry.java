@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.lsp4jdt.core.LSP4JDTCorePlugin;
+import org.eclipse.lsp4jdt.core.jaxrs.IJaxRsInfoProvider;
 import org.eclipse.lsp4jdt.participants.core.java.codeaction.JavaCodeActionDefinition;
 import org.eclipse.lsp4jdt.participants.core.java.codelens.JavaCodeLensDefinition;
 import org.eclipse.lsp4jdt.participants.core.java.completion.JavaCompletionDefinition;
@@ -31,6 +32,7 @@ import org.eclipse.lsp4jdt.participants.core.java.definition.JavaDefinitionDefin
 import org.eclipse.lsp4jdt.participants.core.java.diagnostics.JavaDiagnosticsDefinition;
 import org.eclipse.lsp4jdt.participants.core.java.hover.JavaHoverDefinition;
 import org.eclipse.lsp4jdt.participants.core.java.symbols.JavaWorkspaceSymbolsDefinition;
+import org.eclipse.lsp4jdt.particpants.core.java.jaxrs.DefaultJaxRsInfoProvider;
 
 /**
  * Registry to hold the extension point
@@ -47,6 +49,7 @@ public class JavaFeaturesRegistry {
     private static final String DIAGNOSTICS_ELT = "diagnostics";
     private static final String HOVER_ELT = "hover";
     private static final String WORKSPACE_SYMBOLS_ELT = "workspaceSymbols";
+    private static final String JAXRS_ELT = "jaxrs";
 
     private static final Logger LOGGER = Logger.getLogger(JavaFeaturesRegistry.class.getName());
 
@@ -65,6 +68,8 @@ public class JavaFeaturesRegistry {
     private final List<JavaHoverDefinition> javaHoverDefinitions;
 
     private final List<JavaWorkspaceSymbolsDefinition> javaWorkspaceSymbolsDefinitions;
+    
+    private final List<IJaxRsInfoProvider> jaxRsInfoProviders;
 
     private boolean javaFeatureDefinitionsLoaded;
 
@@ -81,6 +86,7 @@ public class JavaFeaturesRegistry {
         javaDiagnosticsDefinitions = new ArrayList<>();
         javaHoverDefinitions = new ArrayList<>();
         javaWorkspaceSymbolsDefinitions = new ArrayList<>();
+        jaxRsInfoProviders = new ArrayList<>();
     }
 
     /**
@@ -152,6 +158,16 @@ public class JavaFeaturesRegistry {
         loadJavaFeatureDefinitions();
         return javaWorkspaceSymbolsDefinitions;
     }
+    
+	/**
+	 * Returns a list of JAX-RS info providers.
+	 *
+	 * @return a list of JAX-RS info providers
+	 */
+	public List<IJaxRsInfoProvider> getJaxRsInfoProviders() {
+		loadJavaFeatureDefinitions();
+		return jaxRsInfoProviders;
+	}
 
     private synchronized void loadJavaFeatureDefinitions() {
         if (javaFeatureDefinitionsLoaded)
@@ -165,6 +181,7 @@ public class JavaFeaturesRegistry {
         IConfigurationElement[] cf = registry.getConfigurationElementsFor(LSP4JDTCorePlugin.PLUGIN_ID,
                                                                           EXTENSION_JAVA_FEATURE_PARTICIPANTS);
         addJavaFeatureDefinition(cf);
+        jaxRsInfoProviders.add(new DefaultJaxRsInfoProvider());
     }
 
     private void addJavaFeatureDefinition(IConfigurationElement[] cf) {

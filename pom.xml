@@ -23,21 +23,21 @@
 	</licenses>
 
 	<properties>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<tycho.version>3.0.3</tycho.version>
+		<tycho.version>4.0.6</tycho.version>
 		<tycho.extras.version>${tycho.version}</tycho.extras.version>
 		<tycho.generateSourceReferences>true</tycho.generateSourceReferences>
-		<jdt.ls.version>1.34.0-SNAPSHOT</jdt.ls.version>
+		<jdt.ls.version>1.45.0-SNAPSHOT</jdt.ls.version>
 		<releases.repo.id>repo.eclipse.org</releases.repo.id>
 	</properties>
 	<repositories>
 		<repository>
-			<id>2023-06</id>
+			<id>2024-06</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/2023-06</url>
+			<url>http://download.eclipse.org/releases/2023-09</url>
 		</repository>
 		<repository>
 			<id>jdt.ls.p2</id>
